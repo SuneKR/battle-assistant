@@ -1,0 +1,7 @@
+{
+  "name": "battleAssistant",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
