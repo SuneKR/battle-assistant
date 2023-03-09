@@ -24,5 +24,6 @@
 
 <script setup lang="ts">
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { bugOutline, ellipse, grid, gridOutline, radioButtonOff, radioButtonOn, square, triangle } from 'ionicons/icons';
+//import { bugOutline, ellipse, grid, gridOutline, radioButtonOff, radioButtonOn, square, triangle } from 'ionicons/icons';
+import { bugOutline, gridOutline, radioButtonOff } from 'ionicons/icons';
 </script>
