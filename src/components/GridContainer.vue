@@ -1,4 +1,6 @@
 <template>
+    <input type="range" id="cellSizeSlider" min="25" max="150" value="75" class="slider" @mouseup=" update()">
+    <br>
     <canvas id="board" style="border: 2px solid"></canvas>
 </template>
   
@@ -6,17 +8,15 @@
 import Token from "../classes/token"
 import TokenDataService from "../services/tokenDataService"
 
-const canvas = document.getElementById("board")
-const context = canvas.getContext("2d")
-const cellSize = 75
-
 export default {
     name: 'battleMap',
     data: () => ({}),
     methods:{
         drawGrid(){
-            
-
+            const canvas = document.getElementById("board")
+            const context = canvas.getContext("2d")
+            const cellSize = parseInt(document.getElementById("cellSizeSlider").value)
+                       
             canvas.cellInWidth = Math.floor(window.innerWidth / cellSize)
             canvas.width = canvas.cellInWidth * cellSize
             canvas.cellInHeight = Math.floor(window.innerHeight / cellSize)
@@ -42,13 +42,27 @@ export default {
             context.stroke()
         },
         drawTokens(){
+            const canvas = document.getElementById("board")
+            const context = canvas.getContext("2d")
+            const cellSize = parseInt(document.getElementById("cellSizeSlider").value)
+            
             TokenDataService.getAll().then(response => {
                 for (let i = 0; i < response.data.length; i++) {
-                    new Token(canvas, response.data[i].tokenimagesource,response.data[i].gridx,response.data[i].gridy,response.data[i].tokensize,response.data[i].id,response.data[i].selected).draw(canvas, context, cellSize)
+                    new Token(response.data[i].tokenimagesource,response.data[i].gridx,response.data[i].gridy,response.data[i].tokensize,response.data[i].id,response.data[i].selected).draw(canvas, context, cellSize)
                 }
             })
         },
+        clearBoard(){
+            const canvas = document.getElementById("board")
+            const context = canvas.getContext("2d")
+            context.clearRect(0, 0, canvas.width, canvas.height)
+        },
         setupBoard(){
+            this.drawGrid()
+            this.drawTokens()
+        },
+        update(){
+            this.clearBoard()
             this.drawGrid()
             this.drawTokens()
         }

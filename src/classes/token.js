@@ -1,11 +1,6 @@
 import canvasTintImage from "canvas-tint-image"
 import AsyncPreloader from "async-preloader"
 import TokenDataService from "../services/tokenDataService"
-//import GridContainer from "../components/GridContainer"
-
-//const canvas = GridContainer.canvas
-//const context = GridContainer.context
-//const cellSize = GridContainer.cellSize
 
 class Token{
     //constructor(imageSource, gridX = (Math.floor(Math.random()*canvas.cellInWidth)-1), gridY = (Math.floor(Math.random()*canvas.cellInHeight)-1), tokenSize = 1, id, selected){
@@ -24,7 +19,6 @@ class Token{
             console.log(this.tokenImage.src)
             let actualImage = await AsyncPreloader.loadImage(this.tokenImage)
             if(this.selected) {  actualImage = canvasTintImage(actualImage, "#00ff00", 0.5)  }
-            //context.drawImage(actualImage, this.gridX*cellSize, (canvas.cellInHeight-(this.gridY+1))*cellSize, this.tokenSize*cellSize, this.tokenSize*cellSize)
             context.drawImage(actualImage, this.gridX*cellSize, (canvas.cellInHeight-(this.gridY+1))*cellSize, this.tokenSize*cellSize, this.tokenSize*cellSize)
         })()
     }
