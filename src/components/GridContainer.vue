@@ -3,14 +3,19 @@
 </template>
   
 <script>
+import Token from "../classes/token"
+import TokenDataService from "../services/tokenDataService"
+
+const canvas = document.getElementById("board")
+const context = canvas.getContext("2d")
+const cellSize = 75
+
 export default {
     name: 'battleMap',
     data: () => ({}),
     methods:{
-        func(){
-            const canvas = document.getElementById("board")
-            const context = canvas.getContext("2d")
-            const cellSize = 75
+        drawGrid(){
+            
 
             canvas.cellInWidth = Math.floor(window.innerWidth / cellSize)
             canvas.width = canvas.cellInWidth * cellSize
@@ -35,13 +40,23 @@ export default {
                 
             context.strokeStyle ="black"
             context.stroke()
+        },
+        drawTokens(){
+            TokenDataService.getAll().then(response => {
+                for (let i = 0; i < response.data.length; i++) {
+                    new Token(canvas, response.data[i].tokenimagesource,response.data[i].gridx,response.data[i].gridy,response.data[i].tokensize,response.data[i].id,response.data[i].selected).draw(canvas, context, cellSize)
+                }
+            })
+        },
+        setupBoard(){
+            this.drawGrid()
+            this.drawTokens()
         }
     },
     mounted(){ 
-        this.func()
+        this.setupBoard()
         addEventListener('resize', (event) => {  location.reload()  })
     }
-    
 }
 
 /*
