@@ -5,6 +5,7 @@
 </template>
   
 <script>
+import AsyncPreloader from "async-preloader"
 import Token from "../classes/token"
 import TokenDataService from "../services/tokenDataService"
 
@@ -52,6 +53,62 @@ export default {
                 }
             })
         },
+        mouseClick(event){
+            const canvas = document.getElementById("board")
+            const context = canvas.getContext("2d")
+            const cellSize = parseInt(document.getElementById("cellSizeSlider").value)
+            //const mouse = {  x: innerWidth/2, y: innerHeight/2  }
+            const multiSelect = false
+
+            const currentX = Math.floor((event.clientX-canvas.getBoundingClientRect().left)/cellSize)
+            const currentY = Math.floor((canvas.height-event.clientY+canvas.getBoundingClientRect().top)/cellSize)
+
+            //console.log("x:%s, y:%s",currentX,currentY)
+
+            TokenDataService.getAll().then(response => {
+                for (let i = 0; i < response.data.length; i++) {
+                    if((response.data[i].gridx <= currentX) && (currentX < (response.data[i].gridx+response.data[i].tokensize)) && (currentY <= response.data[i].gridy) && ((response.data[i].gridy-response.data[i].tokensize) < currentY)) {
+                        if(response.data[i].selected) {
+                            const updatedData = {
+                                id: response.data[i].id,
+                                tokenimagesource: response.data[i].tokenimagesource,
+                                gridx: response.data[i].gridx,
+                                gridy: response.data[i].gridy,
+                                tokensize:response.data[i].tokensize,
+                                selected: false
+                            }
+                            TokenDataService.update(response.data[i].id, updatedData)
+                            //console.log("%s selected:%s",response.data[i].id,response.data[i].selected)
+                        }
+                        else {
+                            const updatedData = {
+                                id: response.data[i].id,
+                                tokenimagesource: response.data[i].tokenimagesource,
+                                gridx: response.data[i].gridx,
+                                gridy: response.data[i].gridy,
+                                tokensize:response.data[i].tokensize,
+                                selected: true
+                            }
+                            TokenDataService.update(response.data[i].id, updatedData)
+                            //console.log("%s selected:%s",response.data[i].id,response.data[i].selected)
+                        }
+                    }
+                    else if(event.key != "Shift") {
+                        const updatedData = {
+                            id: response.data[i].id,
+                            tokenimagesource: response.data[i].tokenimagesource,
+                            gridx: response.data[i].gridx,
+                            gridy: response.data[i].gridy,
+                            tokensize:response.data[i].tokensize,
+                            selected: false
+                        }
+                        TokenDataService.update(response.data[i].id, updatedData)
+                        //console.log("%s selected:%s",response.data[i].id,response.data[i].selected)
+                    }
+                }
+            }).then(() => this.update())
+
+        },
         clearBoard(){
             const canvas = document.getElementById("board")
             const context = canvas.getContext("2d")
@@ -70,6 +127,7 @@ export default {
     mounted(){ 
         this.setupBoard()
         addEventListener('resize', (event) => {  location.reload()  })
+        addEventListener('click', (event) => {  this.mouseClick(event)  })
     }
 }
 

@@ -15,12 +15,16 @@ class Token{
     }
 
     draw(canvas, context, cellSize){
+        //let actualImage = new Image()
         (async () => {
-            console.log(this.tokenImage.src)
-            let actualImage = await AsyncPreloader.loadImage(this.tokenImage)
-            if(this.selected) {  actualImage = canvasTintImage(actualImage, "#00ff00", 0.5)  }
-            context.drawImage(actualImage, this.gridX*cellSize, (canvas.cellInHeight-(this.gridY+1))*cellSize, this.tokenSize*cellSize, this.tokenSize*cellSize)
+            //let currentImage = this.tokenImage
+            //if(this.selected) {  currentImage = canvasTintImage(currentImage, "#00ff00", 0.5)  }
+            const actualImage = await AsyncPreloader.loadImage(this.tokenImage)
+            if(this.selected) {  context.drawImage(canvasTintImage(actualImage, "#00ff00", 0.5), this.gridX*cellSize, (canvas.cellInHeight-(this.gridY+1))*cellSize, this.tokenSize*cellSize, this.tokenSize*cellSize)  }
+            else {  context.drawImage(actualImage, this.gridX*cellSize, (canvas.cellInHeight-(this.gridY+1))*cellSize, this.tokenSize*cellSize, this.tokenSize*cellSize)  }
+            //context.drawImage(actualImage, this.gridX*cellSize, (canvas.cellInHeight-(this.gridY+1))*cellSize, this.tokenSize*cellSize, this.tokenSize*cellSize)
         })()
+        //context.drawImage(actualImage, this.gridX*cellSize, (canvas.cellInHeight-(this.gridY+1))*cellSize, this.tokenSize*cellSize, this.tokenSize*cellSize)
     }
 
     /*
