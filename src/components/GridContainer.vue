@@ -57,13 +57,11 @@ export default {
             const canvas = document.getElementById("board")
             const context = canvas.getContext("2d")
             const cellSize = parseInt(document.getElementById("cellSizeSlider").value)
-            //const mouse = {  x: innerWidth/2, y: innerHeight/2  }
             const multiSelect = false
 
             const currentX = Math.floor((event.clientX-canvas.getBoundingClientRect().left)/cellSize)
             const currentY = Math.floor((canvas.height-event.clientY+canvas.getBoundingClientRect().top)/cellSize)
 
-            //console.log("x:%s, y:%s",currentX,currentY)
 
             TokenDataService.getAll().then(response => {
                 for (let i = 0; i < response.data.length; i++) {
@@ -78,7 +76,6 @@ export default {
                                 selected: false
                             }
                             TokenDataService.update(response.data[i].id, updatedData)
-                            //console.log("%s selected:%s",response.data[i].id,response.data[i].selected)
                         }
                         else {
                             const updatedData = {
@@ -90,7 +87,6 @@ export default {
                                 selected: true
                             }
                             TokenDataService.update(response.data[i].id, updatedData)
-                            //console.log("%s selected:%s",response.data[i].id,response.data[i].selected)
                         }
                     }
                     else if(event.key != "Shift") {
@@ -103,7 +99,6 @@ export default {
                             selected: false
                         }
                         TokenDataService.update(response.data[i].id, updatedData)
-                        //console.log("%s selected:%s",response.data[i].id,response.data[i].selected)
                     }
                 }
             }).then(() => this.update())
