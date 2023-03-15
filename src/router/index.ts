@@ -24,7 +24,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Tab2Page.vue')
       },
       {
-        path: 'bugs',
+        path: 'camera',
         component: () => import('@/views/Tab3Page.vue')
       }
     ]

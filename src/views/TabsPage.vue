@@ -13,9 +13,9 @@
           <ion-label>Tokens</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="bugs" href="/tabs/bugs">
-          <ion-icon aria-hidden="true" :icon="bugOutline" />
-          <ion-label>Report</ion-label>
+        <ion-tab-button tab="Camera" href="/tabs/camera">
+          <ion-icon aria-hidden="true" :icon="cameraOutline" />
+          <ion-label>Camera</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
@@ -25,5 +25,5 @@
 <script setup lang="ts">
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
 //import { bugOutline, ellipse, grid, gridOutline, radioButtonOff, radioButtonOn, square, triangle } from 'ionicons/icons';
-import { bugOutline, gridOutline, radioButtonOff } from 'ionicons/icons';
+import { bugOutline, cameraOutline, gridOutline, radioButtonOff } from 'ionicons/icons';
 </script>
